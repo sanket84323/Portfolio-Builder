@@ -138,6 +138,9 @@ export default function LandingPage() {
             <Link href="/register" className="btn-primary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem' }}>
               Create Portfolio Free <ArrowRight size={18} />
             </Link>
+            <Link href="/register" className="btn-primary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem', background: 'linear-gradient(135deg, #10b981, #059669)' }}>
+              Create Resume Free <ArrowRight size={18} />
+            </Link>
             <Link href="/templates" className="btn-secondary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem' }}>
               Explore Templates
             </Link>

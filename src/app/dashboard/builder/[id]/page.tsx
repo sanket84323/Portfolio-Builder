@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Save, Eye, Globe, Monitor, Smartphone, FileText, ChevronDown, ChevronUp, Loader2, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
 import { usePortfolio } from '@/hooks/usePortfolio';
@@ -42,7 +42,9 @@ export default function BuilderPage({ params }: PageProps) {
   const router = useRouter();
   const { portfolio, loading, saving, lastSaved, save, update } = usePortfolio(id);
   const [activeSection, setActiveSection] = useState('hero');
-  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile' | 'resume'>('desktop');
+  const searchParams = useSearchParams();
+  const initMode = searchParams.get('mode') === 'resume' ? 'resume' : 'desktop';
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile' | 'resume'>(initMode);
   const [autoSaveTimer, setAutoSaveTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   // Autosave — debounced 3s after each update
@@ -163,7 +165,7 @@ export default function BuilderPage({ params }: PageProps) {
                 key={s.key}
                 onClick={() => setActiveSection(s.key)}
                 style={{
-                  padding: '0.35rem 0.75rem', borderRadius: '8px', border: 'none', cursor: 'pointer',
+                  padding: '0.35rem 0.75rem', borderRadius: '8px', cursor: 'pointer',
                   fontSize: '0.75rem', fontWeight: 600, transition: 'all 0.2s',
                   background: activeSection === s.key ? 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.2))' : 'rgba(255,255,255,0.04)',
                   color: activeSection === s.key ? '#a5b4fc' : '#64748b',

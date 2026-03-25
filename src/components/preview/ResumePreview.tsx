@@ -93,6 +93,42 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
       </div>
     ` : '';
 
+    const resumeTheme = portfolio.theme?.resumeTheme || 'classic';
+
+    const getThemeCss = () => {
+      switch (resumeTheme) {
+        case 'modern':
+          return `
+            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #222; }
+            h1 { text-align: left; font-size: 24pt; margin: 0 0 2pt 0; color: #111; letter-spacing: -0.5px; }
+            .role { text-align: left; color: #555; font-size: 12pt; margin-bottom: 6pt; font-weight: 500; }
+            .contact-info { text-align: left; font-size: 10pt; margin-bottom: 20pt; color: #444; }
+            h2 { font-size: 11pt; text-transform: uppercase; border-bottom: 2px solid #eaeaea; color: #333; margin: 20pt 0 10pt 0; padding-bottom: 4pt; letter-spacing: 1px; }
+            .item-header { color: #111; }
+            .item-sub { color: #555; font-size: 10.5pt; font-style: normal; }
+          `;
+        case 'tech':
+          return `
+            body { font-family: 'Courier New', Courier, monospace; font-size: 10pt; line-height: 1.3; }
+            h1 { text-align: left; font-size: 22pt; margin: 0 0 4pt 0; font-weight: bold; letter-spacing: -1px; }
+            .role { text-align: left; font-style: normal; font-size: 11pt; margin-bottom: 6pt; }
+            .contact-info { text-align: left; font-size: 9pt; margin-bottom: 16pt; }
+            h2 { font-family: 'Courier New', Courier, monospace; background: #e2e8f0; padding: 4pt 8pt; border: none; font-size: 11pt; margin: 16pt 0 8pt 0; text-transform: uppercase; letter-spacing: 0; }
+            .item-header { font-weight: bold; }
+          `;
+        case 'classic':
+        default:
+          return `
+            body { font-family: 'Times New Roman', Times, serif; }
+            h1 { font-size: 26pt; margin: 0 0 2pt 0; text-align: center; line-height: 1.1; text-transform: uppercase; }
+            .role { text-align: center; font-size: 12pt; margin-bottom: 6pt; font-style: italic; }
+            .contact-info { text-align: center; font-size: 10.5pt; margin-bottom: 16pt; }
+            h2 { font-size: 12pt; text-transform: uppercase; border-bottom: 1px solid #000; margin: 16pt 0 8pt 0; padding-bottom: 2pt; letter-spacing: 0.5px; text-align: center; }
+            .item-sub { font-style: italic; }
+          `;
+      }
+    };
+
     const srcDoc = `
       <!DOCTYPE html>
       <html lang="en">
@@ -102,8 +138,6 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
         <style>
           * { box-sizing: border-box; }
           body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #000;
             background: #e2e8f0; /* Default preview background */
             font-size: 11pt;
             line-height: 1.4;
@@ -117,30 +151,19 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
             background: #ffffff;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
           }
-          a { color: #000; text-decoration: none; border-bottom: 1px solid #ccc; }
-          
-          /* Typography */
-          h1 { font-size: 24pt; margin: 0 0 4pt 0; text-align: center; line-height: 1.1; }
-          .role { text-align: center; font-size: 12pt; margin-bottom: 6pt; font-weight: 500; }
-          .contact-info { text-align: center; font-size: 10pt; margin-bottom: 16pt; }
+          a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; }
           .contact-info a { border-bottom: none; }
           
-          h2 { 
-            font-size: 12pt; 
-            text-transform: uppercase; 
-            border-bottom: 1px solid #000; 
-            margin: 16pt 0 8pt 0; 
-            padding-bottom: 2pt; 
-            letter-spacing: 0.5px;
-          }
-          
+          /* Common Item Layouts */
           .item { margin-bottom: 12pt; page-break-inside: avoid; }
           .item-header { display: flex; justify-content: space-between; font-weight: bold; align-items: baseline; }
-          .item-sub { display: flex; justify-content: space-between; font-style: italic; margin-bottom: 4pt; font-size: 10.5pt; }
+          .item-sub { display: flex; justify-content: space-between; margin-bottom: 4pt; }
           .desc-list { margin: 4pt 0 0 0; padding-left: 18pt; }
           .desc-list li { margin-bottom: 3pt; text-align: justify; }
-          
           p { margin: 0 0 8pt 0; text-align: justify; }
+
+          /* Dynamic Theme Injections */
+          ${getThemeCss()}
 
           .print-btn {
             display: block;
@@ -155,6 +178,7 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s, background 0.2s;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
           }
           .print-btn:hover { background: #1e293b; transform: translateY(-1px); }
 
