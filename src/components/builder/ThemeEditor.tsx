@@ -101,25 +101,6 @@ export default function ThemeEditor({ portfolio, onUpdate }: EditorProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
 
-      {/* ── ATS RESUME TEMPLATES ── */}
-      <SectionHeader>ATS Resume Templates</SectionHeader>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.5rem', marginBottom: '1rem' }}>
-        {[
-          { id: 'classic', name: 'Harvard Classic', desc: 'Times New Roman, centered headers. The gold standard for ATS.' },
-          { id: 'modern', name: 'Modern Sans', desc: 'Arial, clean alignment, subtle separation rules.' },
-          { id: 'tech', name: 'Tech Minimal', desc: 'Monospace headers, highly compact and data dense.' },
-          { id: 'executive', name: 'Executive Serif', desc: 'Elegant traditional typography, highly polished layout.' },
-          { id: 'creative', name: 'Creative Bold', desc: 'Modern layout with clean spacing and subtle accents.' },
-          { id: 'academic', name: 'Academic CV', desc: 'Comprehensive, clean structure for research & academia.' }
-        ].map(t => (
-          <button key={t.id} onClick={() => updateTheme('resumeTheme', t.id)}
-            style={{ padding: '0.6rem 0.75rem', borderRadius: '10px', cursor: 'pointer', textAlign: 'left', background: (theme.resumeTheme || 'classic') === t.id ? `rgba(99,102,241,0.18)` : 'rgba(255,255,255,0.03)', border: `1px solid ${(theme.resumeTheme || 'classic') === t.id ? '#6366f1' : 'rgba(255,255,255,0.07)'}`, transition: 'all 0.18s', display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontWeight: 700, fontSize: '0.85rem', color: (theme.resumeTheme || 'classic') === t.id ? '#818cf8' : '#f1f5f9', marginBottom: '2px' }}>{t.name}</span>
-            <span style={{ fontSize: '0.7rem', color: '#64748b' }}>{t.desc}</span>
-          </button>
-        ))}
-      </div>
-
       {/* ── WEB PORTFOLIO TEMPLATES ── */}
       <SectionHeader>Web Portfolio Templates</SectionHeader>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>

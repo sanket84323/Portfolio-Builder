@@ -55,7 +55,6 @@ export interface IThemeSettings {
   darkMode: boolean;
   animationsEnabled: boolean;
   template: string;
-  resumeTheme: 'classic' | 'modern' | 'tech' | 'creative' | 'executive' | 'academic';
   // Extended customization
   heroLayout: 'centered' | 'left' | 'split' | 'minimal';
   bgPattern: 'none' | 'glow' | 'grid' | 'dots' | 'diagonal' | 'mesh';
@@ -87,7 +86,7 @@ export interface ISocialLinks {
 }
 
 export interface IPortfolio extends Document {
-  _id: string;
+  _id: any;
   userId: string;
   title: string;
   tagline: string;
@@ -102,7 +101,6 @@ export interface IPortfolio extends Document {
   skillCategories: ISkillCategory[];
   projects: IProject[];
   achievements: IAchievement[];
-  resumeUrl?: string;
   socialLinks: ISocialLinks;
   themeSettings: IThemeSettings;
   seoTitle?: string;
@@ -168,7 +166,6 @@ const ThemeSettingsSchema = new Schema<IThemeSettings>({
   darkMode: { type: Boolean, default: true },
   animationsEnabled: { type: Boolean, default: true },
   template: { type: String, default: 'developer' },
-  resumeTheme: { type: String, enum: ['classic', 'modern', 'tech', 'creative', 'executive', 'academic'], default: 'classic' },
   heroLayout: { type: String, enum: ['centered', 'left', 'split', 'minimal'], default: 'centered' },
   bgPattern: { type: String, enum: ['none', 'glow', 'grid', 'dots', 'diagonal', 'mesh'], default: 'glow' },
   gradientStart: { type: String, default: '#6366f1' },
@@ -209,7 +206,6 @@ const PortfolioSchema = new Schema<IPortfolio>(
     ],
     projects: [ProjectSchema],
     achievements: [AchievementSchema],
-    resumeUrl: { type: String, default: '' },
     socialLinks: {
       github: { type: String, default: '' },
       linkedin: { type: String, default: '' },

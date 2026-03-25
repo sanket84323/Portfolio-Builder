@@ -67,7 +67,6 @@ export default function PublicPortfolio({ portfolio }: { portfolio: IPortfolio }
         <div style={{ display: 'flex', gap: '0.875rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <a href="#projects" style={btnStyle()}>🚀 View Projects</a>
           <a href="#contact" style={btnStyle(true)}>📩 Contact Me</a>
-          {portfolio.resumeUrl && <a href={portfolio.resumeUrl} target="_blank" rel="noopener" style={{ ...btnStyle(true), border: `2px solid ${cardBorder}`, color: muted }}><Download size={16} /> Resume</a>}
         </div>
       </section>
 

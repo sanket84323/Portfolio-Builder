@@ -169,15 +169,6 @@ export default function HeroEditor({ portfolio, onUpdate }: EditorProps) {
         hint="JPG, PNG, WebP — max 10MB"
         onUploaded={(url) => onUpdate({ profileImage: url })}
       />
-
-      <ImageUploadBox
-        label="Resume / CV"
-        value={portfolio.resumeUrl}
-        accept=".pdf,.doc,.docx"
-        uploadType="resume"
-        hint="PDF, DOC, DOCX — max 10MB"
-        onUploaded={(url) => onUpdate({ resumeUrl: url })}
-      />
     </div>
   );
 }

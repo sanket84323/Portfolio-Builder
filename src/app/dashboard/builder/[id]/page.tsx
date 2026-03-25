@@ -19,7 +19,6 @@ import ContactEditor from '@/components/builder/ContactEditor';
 import ThemeEditor from '@/components/builder/ThemeEditor';
 import PublishPanel from '@/components/builder/PublishPanel';
 import PortfolioPreview from '@/components/preview/PortfolioPreview';
-import ResumePreview from '@/components/preview/ResumePreview';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -42,9 +41,7 @@ export default function BuilderPage({ params }: PageProps) {
   const router = useRouter();
   const { portfolio, loading, saving, lastSaved, save, update } = usePortfolio(id);
   const [activeSection, setActiveSection] = useState('hero');
-  const searchParams = useSearchParams();
-  const initMode = searchParams.get('mode') === 'resume' ? 'resume' : 'desktop';
-  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile' | 'resume'>(initMode);
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
   const [autoSaveTimer, setAutoSaveTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   // Autosave — debounced 3s after each update
@@ -131,12 +128,6 @@ export default function BuilderPage({ params }: PageProps) {
           >
             <Smartphone size={14} /> Mobile
           </button>
-          <button
-            onClick={() => setPreviewMode('resume')}
-            style={{ padding: '0.375rem 0.75rem', borderRadius: '7px', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.375rem', transition: 'all 0.2s', background: previewMode === 'resume' ? 'rgba(99,102,241,0.25)' : 'transparent', color: previewMode === 'resume' ? '#a5b4fc' : '#64748b' }}
-          >
-            <FileText size={14} /> ATS Resume
-          </button>
         </div>
 
         {/* Right: Actions */}
@@ -200,13 +191,9 @@ export default function BuilderPage({ params }: PageProps) {
         </aside>
 
         {/* Right: Live Preview */}
-        <div className="builder-preview" style={{ background: previewMode === 'resume' ? '#e2e8f0' : undefined }}>
-          <div className={`preview-iframe-container ${previewMode}`} style={{ flex: 1, height: '100%', padding: previewMode === 'resume' ? '2rem' : '0' }}>
-            {previewMode === 'resume' ? (
-              <ResumePreview portfolio={portfolio as IPortfolio} />
-            ) : (
-              <PortfolioPreview portfolio={portfolio as IPortfolio} mode={previewMode} />
-            )}
+        <div className="builder-preview">
+          <div className={`preview-iframe-container ${previewMode}`} style={{ flex: 1, height: '100%', padding: '0' }}>
+            <PortfolioPreview portfolio={portfolio as IPortfolio} mode={previewMode} />
           </div>
         </div>
       </div>

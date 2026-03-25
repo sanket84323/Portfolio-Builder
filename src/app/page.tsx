@@ -42,7 +42,7 @@ const PLANS = [
     name: 'Pro',
     price: '₹299',
     period: 'per month',
-    features: ['Unlimited portfolios', 'All 6 templates', 'Custom domain', 'Video uploads', 'Advanced analytics', 'Resume PDF export', 'Priority support'],
+    features: ['Unlimited portfolios', 'All 6 templates', 'Custom domain', 'Video uploads', 'Advanced analytics', 'Priority support'],
     cta: 'Start Free Trial',
     highlight: true,
   },
@@ -59,7 +59,7 @@ const PLANS = [
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+  transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] as any },
 };
 
 const stagger = {
@@ -137,9 +137,6 @@ export default function LandingPage() {
           >
             <Link href="/register" className="btn-primary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem' }}>
               Create Portfolio Free <ArrowRight size={18} />
-            </Link>
-            <Link href="/register" className="btn-primary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem', background: 'linear-gradient(135deg, #10b981, #059669)' }}>
-              Create Resume Free <ArrowRight size={18} />
             </Link>
             <Link href="/templates" className="btn-secondary" style={{ textDecoration: 'none', fontSize: '1rem', padding: '0.875rem 2rem' }}>
               Explore Templates

@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
 
     const maxSizes: Record<string, number> = {
       image: 5 * 1024 * 1024,   // 5MB
-      resume: 10 * 1024 * 1024, // 10MB
       video: 100 * 1024 * 1024, // 100MB
     };
 

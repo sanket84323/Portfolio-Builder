@@ -16,7 +16,6 @@ export default function DashboardPage() {
   const { portfolios, loading, createPortfolio, deletePortfolio } = usePortfolios();
   const router = useRouter();
   const [creating, setCreating] = useState(false);
-  const [creatingResume, setCreatingResume] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleCreate = async () => {
@@ -28,18 +27,6 @@ export default function DashboardPage() {
       router.push(`/dashboard/builder/${p._id}`);
     } else {
       toast.error('Failed to create portfolio');
-    }
-  };
-
-  const handleCreateResume = async () => {
-    setCreatingResume(true);
-    const p = await createPortfolio('My Resume');
-    setCreatingResume(false);
-    if (p) {
-      toast.success('Resume created!');
-      router.push(`/dashboard/builder/${p._id}?mode=resume`);
-    } else {
-      toast.error('Failed to create resume');
     }
   };
 
@@ -91,13 +78,9 @@ export default function DashboardPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button className="btn-primary" onClick={handleCreate} disabled={creating || creatingResume} style={{ fontSize: '0.875rem', padding: '0.6rem 1rem' }}>
+            <button className="btn-primary" onClick={handleCreate} disabled={creating} style={{ fontSize: '0.875rem', padding: '0.6rem 1rem' }}>
               {creating ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
               {creating ? 'Creating...' : 'New Portfolio'}
-            </button>
-            <button className="btn-primary" onClick={handleCreateResume} disabled={creating || creatingResume} style={{ fontSize: '0.875rem', padding: '0.6rem 1rem', background: 'linear-gradient(135deg, #10b981, #059669)' }}>
-              {creatingResume ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-              {creatingResume ? 'Creating...' : 'New Resume'}
             </button>
           </div>
         </header>

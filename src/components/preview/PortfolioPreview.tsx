@@ -1,6 +1,6 @@
 'use client';
 
-import { IPortfolio } from '@/models/Portfolio';
+import { IPortfolio, IThemeSettings } from '@/models/Portfolio';
 import { getVideoEmbedUrl, getVideoThumbnail } from '@/lib/utils';
 
 interface Props {
@@ -32,7 +32,7 @@ function getBgCss(theme: Partial<IPortfolio['themeSettings']>, bg: string, prima
 }
 
 export default function PortfolioPreview({ portfolio, mode }: Props) {
-  const theme = portfolio.themeSettings || {};
+  const theme: Partial<IThemeSettings> = portfolio.themeSettings || {};
   const bg = theme.backgroundColor || '#0f0f1a';
   const primary = theme.primaryColor || '#6366f1';
   const accent = theme.accentColor || '#8b5cf6';
@@ -103,7 +103,7 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
     }
     .card:hover { border-color: ${primary}60; transform: translateY(-4px); box-shadow: 0 20px 40px ${primary}15; }
     .badge { display:inline-block; padding:0.35rem 0.85rem; border-radius:100px; font-size:0.75rem; font-weight:700; background:${primary}15; border:1px solid ${primary}30; color:${primary}; text-transform:uppercase; letter-spacing:0.05em; margin-bottom: 0.5rem; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.75rem 1.75rem; border-radius:${radius === 'none' ? '0' : '100px'}; border:none; font-weight:700; cursor:pointer; font-size:0.9rem; font-family:inherit; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); ${theme.buttonStyle === 'gradient' ? `background:linear-gradient(135deg,${primary},${accent});color:#fff;box-shadow:0 8px 20px ${primary}40;` : theme.buttonStyle === 'solid' ? `background:${primary};color:#fff;box-shadow:0 8px 20px ${primary}30;` : theme.buttonStyle === 'outline' ? `background:transparent;border:2px solid ${primary};color:${primary};` : `background:${primary}15;color:${primary};backdrop-filter:blur(10px);border:1px solid ${primary}30;`} }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.75rem 1.75rem; border-radius:${theme.borderRadius === 'none' ? '0' : '100px'}; border:none; font-weight:700; cursor:pointer; font-size:0.9rem; font-family:inherit; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); ${theme.buttonStyle === 'gradient' ? `background:linear-gradient(135deg,${primary},${accent});color:#fff;box-shadow:0 8px 20px ${primary}40;` : theme.buttonStyle === 'solid' ? `background:${primary};color:#fff;box-shadow:0 8px 20px ${primary}30;` : theme.buttonStyle === 'outline' ? `background:transparent;border:2px solid ${primary};color:${primary};` : `background:${primary}15;color:${primary};backdrop-filter:blur(10px);border:1px solid ${primary}30;`} }
     .btn:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.15); box-shadow: 0 12px 25px ${primary}50; }
     .section-title { position:relative; display:inline-block; margin-bottom:2.5rem; }
     .section-title::after { content:''; position:absolute; bottom:-10px; left:0; width:60px; height:4px; background:linear-gradient(90deg,${primary},${accent}); border-radius:100px; box-shadow: 0 0 10px ${primary}50; }
@@ -147,7 +147,6 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
       <div style="display:flex;gap:1rem;flex-wrap:wrap;${heroText !== 'center' ? '' : 'justify-content:center;'};">
         <a href="#projects"><button class="btn">🚀 View Projects</button></a>
         <a href="#contact"><button class="btn" style="background:transparent;border:2px solid ${primary}50;color:${textColor}">📩 Contact Me</button></a>
-        ${portfolio.resumeUrl ? `<a href="${portfolio.resumeUrl}" target="_blank"><button class="btn" style="background:transparent;border:2px solid ${cardBorder};color:${mutedColor}">📄 Resume</button></a>` : ''}
       </div>
     </div>
   `;
@@ -156,14 +155,14 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
     ? `<section style="min-height:100vh;display:flex;align-items:center;padding:${sectionPad} ${isMobile ? '1.25rem' : '5rem'};">
         <div style="display:flex;gap:4rem;align-items:center;width:100%;flex-wrap:wrap;">
           ${heroContentHtml}
-          ${heroLayout !== 'minimal' ? `<div style="flex-shrink:0;">${avatarHtml}</div>` : ''}
+          <div style="flex-shrink:0;">${avatarHtml}</div>
         </div>
        </section>`
     : heroLayout === 'left'
     ? `<section style="min-height:100vh;display:flex;align-items:center;padding:${sectionPad} ${isMobile ? '1.25rem' : '5rem'};">
         <div style="display:flex;gap:3rem;align-items:center;width:100%;flex-wrap:wrap;">
           <div style="flex:1">${heroContentHtml}</div>
-          ${heroLayout !== 'minimal' ? `<div style="flex-shrink:0;">${avatarHtml}</div>` : ''}
+          <div style="flex-shrink:0;">${avatarHtml}</div>
         </div>
        </section>`
     : `<section class="${theme.bgPattern === 'glow' ? 'hero-glow' : ''}" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:${sectionPad} ${isMobile ? '1.5rem' : '4rem'};">
