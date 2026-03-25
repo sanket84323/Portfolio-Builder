@@ -38,8 +38,19 @@ export async function POST(req: NextRequest) {
       userId: authUser.userId,
       title: title || 'My Portfolio',
       publicSlug: slug,
-      skillCategories: SKILL_CATEGORIES_DEFAULT,
-      themeSettings: {},
+      skillCategories: body.skillCategories || SKILL_CATEGORIES_DEFAULT,
+      themeSettings: body.themeSettings || {},
+      role: body.role || '',
+      tagline: body.tagline || '',
+      about: body.about || '',
+      college: body.college || '',
+      degree: body.degree || '',
+      careerFocus: body.careerFocus || '',
+      interests: body.interests || [],
+      projects: body.projects || [],
+      education: body.education || [],
+      achievements: body.achievements || [],
+      socialLinks: body.socialLinks || {},
     });
 
     return NextResponse.json({ portfolio }, { status: 201 });

@@ -86,6 +86,12 @@ export default function ThemeEditor({ portfolio, onUpdate }: EditorProps) {
         buttonStyle: t.buttonStyle as IThemeSettings['buttonStyle'],
         darkMode: t.darkMode,
         template: t.template,
+        heroLayout: t.heroLayout as IThemeSettings['heroLayout'],
+        bgPattern: t.bgPattern as IThemeSettings['bgPattern'],
+        useGradientBg: t.useGradientBg,
+        navStyle: t.navStyle as IThemeSettings['navStyle'],
+        borderRadius: t.borderRadius as IThemeSettings['borderRadius'],
+        sectionSpacing: t.sectionSpacing as IThemeSettings['sectionSpacing'],
       } as IThemeSettings,
     });
   };

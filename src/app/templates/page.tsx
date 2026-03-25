@@ -29,6 +29,29 @@ export default function TemplatesPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: 'My Portfolio',
+          role: 'Full Stack Developer',
+          tagline: 'Bridging the gap between design and development to build beautiful, functional web applications.',
+          about: 'I am a passionate software engineer with a strong foundation in modern web technologies. I love building products that solve real problems, optimizing performance, and creating intuitive user experiences. When I am not coding, you can find me exploring new tech or writing articles about software architecture.',
+          college: 'University of Technology',
+          degree: 'B.S. in Computer Science',
+          careerFocus: 'Web Development & MLOps',
+          interests: ['Open Source', 'UI/UX Design', 'Cloud Architecture', 'Artificial Intelligence'],
+          projects: [
+            { title: 'Nexus E-Commerce', description: 'A modern headless e-commerce platform built with Next.js, Stripe, and Sanity CMS. Features real-time inventory, auth, and lightning-fast edge caching.', techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Stripe'], githubLink: 'https://github.com', liveLink: 'https://example.com', image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80' },
+            { title: 'SynthAI Image Generator', description: 'AI-powered image generation tool leveraging Stable Diffusion. Includes a prompt gallery, user accounts, and one-click variations.', techStack: ['React', 'Node.js', 'Python', 'Replicate API'], githubLink: 'https://github.com', liveLink: 'https://example.com', image: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80' }
+          ],
+          education: [
+            { institution: 'University of Technology', degree: 'Bachelor of Science', field: 'Computer Science', startYear: '2019', endYear: '2023', grade: '3.8', achievements: "Dean's List, Lead Hacker at GDSC" }
+          ],
+          achievements: [
+            { category: 'hackathon', title: 'Global HackWeek Winner', issuer: 'Major League Hacking', description: 'Won 1st place overall for building a distributed climate-data tracking node network.', date: 'Oct 2023' }
+          ],
+          skillCategories: [
+            { name: 'Core', skills: ['TypeScript', 'JavaScript', 'Python', 'Go'] },
+            { name: 'Frontend', skills: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'] },
+            { name: 'Backend', skills: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Redis'] }
+          ],
+          socialLinks: { github: 'https://github.com', linkedin: 'https://linkedin.com', twitter: 'https://twitter.com', email: 'hello@example.com' },
           themeSettings: {
             primaryColor: t.primaryColor,
             accentColor: t.accentColor,
@@ -39,6 +62,12 @@ export default function TemplatesPage() {
             buttonStyle: t.buttonStyle,
             darkMode: t.darkMode,
             template: t.template,
+            heroLayout: t.heroLayout,
+            bgPattern: t.bgPattern,
+            useGradientBg: t.useGradientBg,
+            navStyle: t.navStyle,
+            borderRadius: t.borderRadius,
+            sectionSpacing: t.sectionSpacing,
           },
         }),
       });
