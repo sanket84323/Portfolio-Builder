@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
 import { getUserFromRequest } from '@/lib/auth';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,18 +35,18 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', authUser.userId, type);
-    await mkdir(uploadDir, { recursive: true });
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: `portfolio_builder/${authUser.userId}`, resource_type: type === 'video' ? 'video' : 'image' },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      uploadStream.end(buffer);
+    });
 
-    const ext = file.name.split('.').pop() || 'bin';
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const filepath = path.join(uploadDir, filename);
-
-    await writeFile(filepath, buffer);
-
-    const url = `/uploads/${authUser.userId}/${type}/${filename}`;
-
-    return NextResponse.json({ url, filename, size: file.size }, { status: 201 });
+    return NextResponse.json({ url: (result as any).secure_url, filename: file.name, size: file.size }, { status: 201 });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
