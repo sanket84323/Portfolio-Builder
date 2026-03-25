@@ -83,39 +83,54 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
       color: ${textColor};
       line-height: 1.65;
       font-size: ${isMobile ? '14px' : fontSize};
+      overflow-x: hidden;
     }
-    section { padding: ${sectionPad} ${isMobile ? '1.25rem' : '4rem'}; }
-    h1 { font-size: ${isMobile ? '1.9rem' : '2.9rem'}; font-weight: 900; letter-spacing: -0.02em; }
-    h2 { font-size: ${isMobile ? '1.4rem' : '1.875rem'}; font-weight: 800; }
-    h3 { font-size: 1.05rem; font-weight: 700; }
+    ::selection { background: ${primary}50; color: ${textColor}; }
+    section { padding: ${sectionPad} ${isMobile ? '1.25rem' : '4rem'}; position: relative; z-index: 10; }
+    h1 { font-size: ${isMobile ? '2.2rem' : '3.8rem'}; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 0.5rem; }
+    h1 span { background: linear-gradient(135deg, ${primary}, ${accent}); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px ${primary}40); }
+    h2 { font-size: ${isMobile ? '1.6rem' : '2.2rem'}; font-weight: 800; letter-spacing: -0.02em; }
+    h3 { font-size: 1.15rem; font-weight: 700; }
     .muted { color: ${mutedColor}; }
     .card {
       background: ${cardBg};
       border: 1px solid ${cardBorder};
       border-radius: ${radius};
-      padding: 1.5rem;
-      ${theme.cardStyle === 'glass' ? 'backdrop-filter: blur(20px);' : ''}
-      ${theme.cardStyle === 'raised' ? `box-shadow: 0 8px 30px rgba(0,0,0,0.3);` : ''}
+      padding: 1.75rem;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+      ${theme.cardStyle === 'glass' ? 'backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);' : ''}
+      ${theme.cardStyle === 'raised' ? `box-shadow: 0 10px 40px rgba(0,0,0,0.15);` : ''}
     }
-    .badge { display:inline-block; padding:0.25rem 0.75rem; border-radius:100px; font-size:0.78rem; font-weight:600; background:${primary}20; border:1px solid ${primary}30; color:${primary}; }
-    .btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.65rem 1.5rem; border-radius:${radius}; border:none; font-weight:700; cursor:pointer; font-size:0.88rem; font-family:inherit; transition:all 0.2s; ${theme.buttonStyle === 'gradient' ? `background:linear-gradient(135deg,${primary},${accent});color:#fff;` : theme.buttonStyle === 'solid' ? `background:${primary};color:#fff;` : theme.buttonStyle === 'outline' ? `background:transparent;border:2px solid ${primary};color:${primary};` : `background:${primary}15;color:${primary};`} }
-    .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-    .section-title { position:relative; display:inline-block; margin-bottom:1.75rem; }
-    .section-title::after { content:''; position:absolute; bottom:-6px; left:0; width:40px; height:3px; background:linear-gradient(90deg,${primary},${accent}); border-radius:100px; }
-    .skill-badge { display:inline-block; padding:0.25rem 0.75rem; border-radius:100px; font-size:0.78rem; font-weight:600; background:${primary}20; border:1px solid ${primary}30; color:${primary}; margin:0.2rem; }
-    .skill-bar { height:6px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; margin-top:0.35rem; }
-    .skill-bar-fill { height:100%; background:linear-gradient(90deg,${primary},${accent}); border-radius:100px; }
-    .proj-grid { display:grid; grid-template-columns:${isMobile ? '1fr' : 'repeat(2,1fr)'}; gap:1.25rem; }
-    .edu-dot { position:absolute; left:-0.6rem; top:0.3rem; width:12px; height:12px; border-radius:50%; background:${primary}; border:2px solid ${bg}; }
-    .ach-grid { display:grid; grid-template-columns:${isMobile ? '1fr' : 'repeat(2,1fr)'}; gap:1rem; }
-    nav { display:${navStyle === 'none' ? 'none' : 'flex'}; position:sticky; top:0; z-index:100; background:${navBg}; ${navStyle === 'floating' ? `backdrop-filter:blur(20px); border-bottom:1px solid ${cardBorder};` : ''} justify-content:space-between; align-items:center; padding:0 ${isMobile ? '1rem' : '3rem'}; height:${navStyle === 'minimal' ? '48px' : '56px'}; }
-    .nav-brand { font-weight:800; font-size:1rem; color:${primary}; }
-    .nav-links { display:${isMobile ? 'none' : 'flex'}; gap:1.5rem; }
-    .nav-links a { color:${mutedColor}; text-decoration:none; font-size:0.85rem; font-weight:500; }
+    .card:hover { border-color: ${primary}60; transform: translateY(-4px); box-shadow: 0 20px 40px ${primary}15; }
+    .badge { display:inline-block; padding:0.35rem 0.85rem; border-radius:100px; font-size:0.75rem; font-weight:700; background:${primary}15; border:1px solid ${primary}30; color:${primary}; text-transform:uppercase; letter-spacing:0.05em; margin-bottom: 0.5rem; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; padding:0.75rem 1.75rem; border-radius:${radius === 'none' ? '0' : '100px'}; border:none; font-weight:700; cursor:pointer; font-size:0.9rem; font-family:inherit; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1); ${theme.buttonStyle === 'gradient' ? `background:linear-gradient(135deg,${primary},${accent});color:#fff;box-shadow:0 8px 20px ${primary}40;` : theme.buttonStyle === 'solid' ? `background:${primary};color:#fff;box-shadow:0 8px 20px ${primary}30;` : theme.buttonStyle === 'outline' ? `background:transparent;border:2px solid ${primary};color:${primary};` : `background:${primary}15;color:${primary};backdrop-filter:blur(10px);border:1px solid ${primary}30;`} }
+    .btn:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.15); box-shadow: 0 12px 25px ${primary}50; }
+    .section-title { position:relative; display:inline-block; margin-bottom:2.5rem; }
+    .section-title::after { content:''; position:absolute; bottom:-10px; left:0; width:60px; height:4px; background:linear-gradient(90deg,${primary},${accent}); border-radius:100px; box-shadow: 0 0 10px ${primary}50; }
+    .skill-badge { display:inline-block; padding:0.4rem 1rem; border-radius:100px; font-size:0.85rem; font-weight:600; background:${primary}15; border:1px solid ${primary}30; color:${textColor}; margin:0.3rem; transition:all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .skill-badge:hover { background:${primary}30; transform: translateY(-2px); border-color: ${primary}; color: ${primary}; }
+    .skill-bar { height:8px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; margin-top:0.4rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+    .skill-bar-fill { height:100%; background:linear-gradient(90deg,${primary},${accent}); border-radius:100px; transform-origin: left; transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 10px ${primary}; }
+    .in-view .skill-bar-fill { transform: scaleX(1); }
+    .proj-grid { display:grid; grid-template-columns:${isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))'}; gap:2rem; }
+    .proj-card { overflow:hidden; display:flex; flex-direction:column; padding:0; border:1px solid ${cardBorder}; }
+    .proj-img-wrap { width:100%; height:220px; position:relative; overflow:hidden; border-bottom:1px solid ${cardBorder}; }
+    .proj-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .proj-card:hover .proj-img-wrap img { transform:scale(1.08); }
+    .edu-dot { position:absolute; left:-0.65rem; top:0.4rem; width:16px; height:16px; border-radius:50%; background:${primary}; border:3px solid ${bg}; box-shadow: 0 0 15px ${primary}80; z-index: 2; }
+    .edu-line { position:absolute; left:0; top:0; bottom:-2rem; width:2px; background:linear-gradient(to bottom, ${primary}80, transparent); }
+    .ach-grid { display:grid; grid-template-columns:${isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))'}; gap:1.5rem; }
+    nav { display:${navStyle === 'none' ? 'none' : 'flex'}; position:sticky; top:20px; z-index:100; background:${navBg}; ${navStyle === 'floating' ? `backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid ${cardBorder}; border-radius:100px; margin: 0 ${isMobile ? '1rem' : 'auto'}; max-width: 900px;` : 'margin: 0; width: 100%; top: 0;'} justify-content:space-between; align-items:center; padding:0 ${isMobile ? '1.5rem' : '2.5rem'}; height:${navStyle === 'minimal' ? '60px' : '70px'}; transition: all 0.3s; }
+    .nav-brand { font-weight:900; font-size:1.2rem; color:${primary}; letter-spacing: -0.03em; }
+    .nav-links { display:${isMobile ? 'none' : 'flex'}; gap:2rem; }
+    .nav-links a { color:${mutedColor}; text-decoration:none; font-size:0.9rem; font-weight:600; transition: color 0.2s; }
     .nav-links a:hover { color:${textColor}; }
-    footer { text-align:center; padding:2.5rem 2rem; border-top:1px solid ${cardBorder}; color:${mutedColor}; font-size:0.875rem; }
-    a { color:${primary}; text-decoration:none; }
-    ${theme.bgPattern === 'glow' ? `.hero-glow { background: radial-gradient(ellipse 70% 60% at 50% -10%, ${primary}35 0%, transparent 70%); }` : ''}
+    footer { text-align:center; padding:4rem 2rem; border-top:1px solid ${cardBorder}; color:${mutedColor}; font-size:0.9rem; margin-top: 4rem; }
+    a { color:${primary}; text-decoration:none; transition: color 0.2s; }
+    a:hover { filter: brightness(1.2); }
+    ${theme.bgPattern === 'glow' ? `.hero-glow { position: relative; } .hero-glow::before { content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:80vw; height:80vh; background:radial-gradient(ellipse at center, ${primary}30 0%, transparent 60%); filter:blur(100px); border-radius:50%; z-index:-1; pointer-events:none; animation: pulseGlow 8s ease-in-out infinite alternate; } @keyframes pulseGlow { 0% { opacity: 0.5; transform:translateX(-50%) scale(1); } 100% { opacity: 1; transform:translateX(-50%) scale(1.1); } }` : ''}
+    .animate-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .animate-up.in-view { opacity: 1; transform: translateY(0); }
     ${theme.customCSS || ''}
   `;
 
@@ -124,13 +139,14 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
     : `<div style="width:${heroLayout === 'split' ? '160px' : isMobile ? '90px' : '120px'};height:${heroLayout === 'split' ? '160px' : isMobile ? '90px' : '120px'};border-radius:50%;background:linear-gradient(135deg,${primary},${accent});display:flex;align-items:center;justify-content:center;font-size:${heroLayout === 'split' ? '4rem' : isMobile ? '2.5rem' : '3.5rem'};font-weight:900;color:white;${heroLayout !== 'split' ? 'margin-bottom:1.5rem;' : ''}">${(displayName || 'Y').charAt(0)}</div>`;
 
   const heroContentHtml = `
-    <div style="flex:1;${heroLayout === 'split' ? '' : 'display:flex;flex-direction:column;align-items:' + (heroText === 'center' ? 'center' : 'flex-start') + ';'}">
-      <h1 style="margin-bottom:0.6rem">${displayName || 'Your Name'}</h1>
-      <p style="font-size:1.15rem;font-weight:700;color:${primary};margin-bottom:0.6rem">${portfolio.role || 'Your Role'}</p>
-      <p class="muted" style="max-width:540px;line-height:1.7;margin-bottom:2rem;font-size:${fontSize}">${portfolio.tagline || 'Your tagline goes here — make it memorable.'}</p>
-      <div style="display:flex;gap:0.875rem;flex-wrap:wrap;${heroText !== 'center' ? '' : 'justify-content:center;'}">
-        <a href="#projects"><button class="btn">🚀 Projects</button></a>
-        <a href="#contact"><button class="btn" style="background:transparent;border:2px solid ${primary}50;color:${textColor}">📩 Contact</button></a>
+    <div class="animate-up" style="flex:1;${heroLayout === 'split' ? '' : 'display:flex;flex-direction:column;align-items:' + (heroText === 'center' ? 'center' : 'flex-start') + ';'}">
+      <span class="badge" style="margin-bottom:1.5rem">👋 Welcome</span>
+      <h1 style="margin-bottom:0.8rem"><span>${displayName || 'Your Name'}</span></h1>
+      <p style="font-size:1.35rem;font-weight:700;color:${textColor};opacity:0.9;margin-bottom:1.2rem;letter-spacing:-0.01em">${portfolio.role || 'Your Role'}</p>
+      <p class="muted" style="max-width:580px;line-height:1.75;margin-bottom:2.5rem;font-size:${fontSize}">${portfolio.tagline || 'Your tagline goes here — make it memorable.'}</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;${heroText !== 'center' ? '' : 'justify-content:center;'};">
+        <a href="#projects"><button class="btn">🚀 View Projects</button></a>
+        <a href="#contact"><button class="btn" style="background:transparent;border:2px solid ${primary}50;color:${textColor}">📩 Contact Me</button></a>
         ${portfolio.resumeUrl ? `<a href="${portfolio.resumeUrl}" target="_blank"><button class="btn" style="background:transparent;border:2px solid ${cardBorder};color:${mutedColor}">📄 Resume</button></a>` : ''}
       </div>
     </div>
@@ -159,17 +175,17 @@ export default function PortfolioPreview({ portfolio, mode }: Props) {
   const showSkillBars = !!theme.showSkillBars;
   const skillsHtml = portfolio.skillCategories?.some((c: any) => c.skills?.length)
     ? `<section id="skills" style="background:${cardBg}">
-        <div style="max-width:900px;margin:0 auto">
-          <h2 class="section-title">Skills</h2>
-          <div style="display:grid;grid-template-columns:${isMobile ? '1fr' : 'repeat(2,1fr)'};gap:1.25rem">
-            ${portfolio.skillCategories!.filter((c: any) => c.skills?.length).map((c: any) => `
-              <div class="card">
-                <h3 style="color:${primary};margin-bottom:0.75rem">${c.name}</h3>
+        <div style="max-width:1050px;margin:0 auto">
+          <h2 class="section-title animate-up">Skills Dashboard</h2>
+          <div style="display:grid;grid-template-columns:${isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))'};gap:1.5rem">
+            ${portfolio.skillCategories!.filter((c: any) => c.skills?.length).map((c: any, index: number) => `
+              <div class="card animate-up" style="transition-delay: ${(index * 0.1).toFixed(2)}s">
+                <h3 style="color:${primary};margin-bottom:1.25rem;font-size:1.2rem;letter-spacing:-0.01em">${c.name}</h3>
                 <div>
                   ${c.skills.map((s: string, i: number) => showSkillBars
-                    ? `<div style="margin-bottom:0.6rem">
-                        <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.25rem"><span>${s}</span><span style="color:${primary}">${Math.max(70, 95 - i * 5)}%</span></div>
-                        <div class="skill-bar"><div class="skill-bar-fill" style="width:${Math.max(70, 95 - i * 5)}%"></div></div>
+                    ? `<div style="margin-bottom:1rem">
+                        <div style="display:flex;justify-content:space-between;font-size:0.85rem;font-weight:600;margin-bottom:0.35rem"><span>${s}</span><span style="color:${primary}">${Math.max(70, 95 - i * 5)}%</span></div>
+                        <div class="skill-bar"><div class="skill-bar-fill" style="width:${Math.max(70, 95 - i * 5)}%;transition-delay:${((index * 0.1) + (i * 0.05)).toFixed(2)}s"></div></div>
                        </div>`
                     : `<span class="skill-badge">${s}</span>`
                   ).join('')}
@@ -246,19 +262,21 @@ ${show('skills') ? skillsHtml : ''}
 ${show('projects') && portfolio.projects?.length ? `
 <section id="projects">
   <div style="max-width:1050px;margin:0 auto">
-    <h2 class="section-title">Projects</h2>
+    <h2 class="section-title animate-up">Featured Projects</h2>
     <div class="proj-grid">
-      ${portfolio.projects.map((proj: any) => {
+      ${portfolio.projects.map((proj: any, idx: number) => {
         const thumb = proj.videoThumbnail || (proj.videoUrl && proj.videoType !== 'upload' ? getVideoThumbnail(proj.videoUrl, proj.videoType) : '');
-        return `<div class="card" style="overflow:hidden;display:flex;flex-direction:column">
-          ${proj.image || thumb ? `<div style="width:100%;height:175px;background:${primary}12;border-radius:${radius};overflow:hidden;margin-bottom:1rem;position:relative"><img src="${proj.image || thumb}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.display='none'"/>${proj.videoUrl ? `<div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center"><div style="width:48px;height:48px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" fill="${primary}" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>` : ''}</div>` : ''}
-          <h3 style="margin-bottom:0.4rem">${proj.title}</h3>
-          <p class="muted" style="font-size:0.875rem;line-height:1.55;flex:1;margin-bottom:0.875rem">${proj.description || ''}</p>
-          ${proj.techStack?.length ? `<div style="display:flex;flex-wrap:wrap;gap:0.25rem;margin-bottom:0.875rem">${proj.techStack.map((t: string) => `<span style="padding:0.15rem 0.5rem;font-size:0.7rem;border-radius:6px;background:${primary}15;color:${primary};font-weight:600">${t}</span>`).join('')}</div>` : ''}
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            ${proj.videoUrl ? `<button class="btn" style="font-size:0.78rem;padding:0.4rem 0.875rem">▶ Demo</button>` : ''}
-            ${proj.githubLink ? `<a href="${proj.githubLink}" target="_blank"><button class="btn" style="font-size:0.78rem;padding:0.4rem 0.875rem;background:transparent;border:1px solid ${cardBorder};color:${textColor}">GitHub</button></a>` : ''}
-            ${proj.liveLink ? `<a href="${proj.liveLink}" target="_blank"><button class="btn" style="font-size:0.78rem;padding:0.4rem 0.875rem;background:transparent;border:1px solid ${cardBorder};color:${textColor}">Live ↗</button></a>` : ''}
+        return `<div class="card proj-card animate-up" style="transition-delay: ${(idx * 0.1).toFixed(2)}s">
+          ${proj.image || thumb ? `<div class="proj-img-wrap"><img src="${proj.image || thumb}" onerror="this.parentElement.style.display='none'"/>${proj.videoUrl ? `<div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center"><div style="width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);backdrop-filter:blur(5px)"><svg width="22" height="22" fill="${primary}" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>` : ''}</div>` : ''}
+          <div style="padding:1.75rem;display:flex;flex-direction:column;flex:1">
+            <h3 style="margin-bottom:0.6rem;font-size:1.3rem;letter-spacing:-0.01em">${proj.title}</h3>
+            <p class="muted" style="font-size:0.9rem;line-height:1.6;flex:1;margin-bottom:1.25rem">${proj.description || ''}</p>
+            ${proj.techStack?.length ? `<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.5rem">${proj.techStack.map((t: string) => `<span style="padding:0.25rem 0.6rem;font-size:0.75rem;border-radius:6px;background:${primary}15;color:${primary};font-weight:700">${t}</span>`).join('')}</div>` : ''}
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+              ${proj.videoUrl ? `<button class="btn" style="font-size:0.8rem;padding:0.5rem 1rem">▶ Play Demo</button>` : ''}
+              ${proj.githubLink ? `<a href="${proj.githubLink}" target="_blank"><button class="btn" style="font-size:0.8rem;padding:0.5rem 1rem;background:transparent;border:1px solid ${cardBorder};color:${textColor}">GitHub</button></a>` : ''}
+              ${proj.liveLink ? `<a href="${proj.liveLink}" target="_blank"><button class="btn" style="font-size:0.8rem;padding:0.5rem 1rem;background:transparent;border:1px solid ${cardBorder};color:${textColor}">Visit Live ↗</button></a>` : ''}
+            </div>
           </div>
         </div>`;
       }).join('')}
@@ -302,9 +320,29 @@ ${show('contact') && portfolio.socialLinks && Object.values(portfolio.socialLink
 </section>` : ''}
 
 <footer>
-  <p style="font-weight:700;margin-bottom:0.25rem;color:${textColor}">${displayName}</p>
-  <p>Built with <a href="/" style="color:${primary}">PortfolioBuilder</a> · ${new Date().getFullYear()}</p>
+  <p style="font-weight:800;font-size:1.1rem;margin-bottom:0.4rem;color:${textColor}">${displayName}</p>
+  <p>Crafted with <a href="/" style="color:${primary};font-weight:600">PortfolioBuilder</a> · ${new Date().getFullYear()}</p>
 </footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    document.querySelectorAll('.animate-up').forEach(el => observer.observe(el));
+    
+    // Animate hero elements immediately since they are usually above fold
+    setTimeout(() => {
+      document.querySelectorAll('section:nth-of-type(1) .animate-up').forEach(el => el.classList.add('in-view'));
+    }, 100);
+  });
+</script>
 </body>
 </html>`;
 
