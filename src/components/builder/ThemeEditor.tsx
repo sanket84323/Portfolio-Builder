@@ -107,7 +107,10 @@ export default function ThemeEditor({ portfolio, onUpdate }: EditorProps) {
         {[
           { id: 'classic', name: 'Harvard Classic', desc: 'Times New Roman, centered headers. The gold standard for ATS.' },
           { id: 'modern', name: 'Modern Sans', desc: 'Arial, clean alignment, subtle separation rules.' },
-          { id: 'tech', name: 'Tech Minimal', desc: 'Monospace headers, highly compact and data dense.' }
+          { id: 'tech', name: 'Tech Minimal', desc: 'Monospace headers, highly compact and data dense.' },
+          { id: 'executive', name: 'Executive Serif', desc: 'Elegant traditional typography, highly polished layout.' },
+          { id: 'creative', name: 'Creative Bold', desc: 'Modern layout with clean spacing and subtle accents.' },
+          { id: 'academic', name: 'Academic CV', desc: 'Comprehensive, clean structure for research & academia.' }
         ].map(t => (
           <button key={t.id} onClick={() => updateTheme('resumeTheme', t.id)}
             style={{ padding: '0.6rem 0.75rem', borderRadius: '10px', cursor: 'pointer', textAlign: 'left', background: (theme.resumeTheme || 'classic') === t.id ? `rgba(99,102,241,0.18)` : 'rgba(255,255,255,0.03)', border: `1px solid ${(theme.resumeTheme || 'classic') === t.id ? '#6366f1' : 'rgba(255,255,255,0.07)'}`, transition: 'all 0.18s', display: 'flex', flexDirection: 'column' }}>

@@ -12,12 +12,12 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
   const [htmlContent, setHtmlContent] = useState('');
 
   useEffect(() => {
-    const displayName = portfolio.name || 'Your Name';
+    const displayName = (portfolio as any).name || 'Your Name';
     const email = portfolio.socialLinks?.email || '';
     const phone = portfolio.socialLinks?.phone || '';
     const linkedin = portfolio.socialLinks?.linkedin || '';
     const github = portfolio.socialLinks?.github || '';
-    const location = portfolio.socialLinks?.location || '';
+    const location = (portfolio.socialLinks as any)?.location || '';
 
     // Helper to format links simply for ATS
     const contactParts = [];
@@ -93,10 +93,43 @@ export default function ResumePreview({ portfolio }: ResumePreviewProps) {
       </div>
     ` : '';
 
-    const resumeTheme = portfolio.theme?.resumeTheme || 'classic';
+    const resumeTheme = portfolio.themeSettings?.resumeTheme || 'classic';
 
     const getThemeCss = () => {
       switch (resumeTheme) {
+        case 'creative':
+          return `
+            body { font-family: 'Inter', 'Helvetica Neue', sans-serif; color: #1e293b; }
+            h1 { text-align: left; font-size: 26pt; margin: 0 0 4pt 0; color: #0f172a; font-weight: 800; letter-spacing: -0.02em; }
+            .role { text-align: left; color: #4338ca; font-size: 13pt; margin-bottom: 8pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+            .contact-info { text-align: left; font-size: 10pt; margin-bottom: 24pt; color: #475569; }
+            h2 { font-size: 12pt; text-transform: uppercase; border-bottom: 2px solid #e0e7ff; color: #3730a3; margin: 22pt 0 12pt 0; padding-bottom: 4pt; letter-spacing: 0.05em; font-weight: 700; }
+            .item-header { color: #0f172a; font-weight: 700; }
+            .item-sub { color: #64748b; font-size: 10.5pt; font-weight: 500; }
+          `;
+        case 'executive':
+          return `
+            body { font-family: 'Georgia', serif; color: #333; }
+            h1 { text-align: center; font-size: 24pt; margin: 0 0 4pt 0; color: #111; font-weight: normal; letter-spacing: 1px; text-transform: uppercase; }
+            .role { text-align: center; color: #555; font-size: 11pt; margin-bottom: 8pt; font-style: italic; }
+            .contact-info { text-align: center; font-size: 9.5pt; margin-bottom: 20pt; color: #444; }
+            h2 { font-size: 11pt; text-transform: uppercase; border-bottom: 1px solid #111; color: #111; margin: 20pt 0 10pt 0; padding-bottom: 3pt; letter-spacing: 1px; text-align: center; }
+            .item-header { color: #111; font-weight: bold; }
+            .item-sub { color: #555; font-size: 10pt; font-style: italic; }
+            .desc-list li { margin-bottom: 4pt; }
+          `;
+        case 'academic':
+          return `
+            body { font-family: 'Palatino', 'Palatino Linotype', serif; color: #000; font-size: 10.5pt; }
+            h1 { text-align: left; font-size: 22pt; margin: 0 0 2pt 0; color: #000; border-bottom: 1px solid #ccc; padding-bottom: 4pt; }
+            .role { text-align: left; color: #333; font-size: 12pt; margin-bottom: 4pt; margin-top: 4pt; font-weight: bold; }
+            .contact-info { text-align: left; font-size: 9.5pt; margin-bottom: 16pt; color: #333; }
+            h2 { font-size: 11pt; text-transform: uppercase; color: #000; margin: 16pt 0 6pt 0; letter-spacing: 0.5px; font-weight: bold; }
+            .item { margin-bottom: 10pt; }
+            .item-header { color: #000; font-weight: bold; }
+            .item-sub { color: #222; font-size: 10pt; }
+            .desc-list { list-style-type: square; }
+          `;
         case 'modern':
           return `
             body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #222; }
