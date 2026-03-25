@@ -2,13 +2,59 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ArrowRight, Moon, Sun, Search } from 'lucide-react';
+import { ArrowRight, Moon, Sun, Search, Loader2 } from 'lucide-react';
 import { TEMPLATE_THEMES } from '@/lib/constants';
+import { useAuth } from '@/contexts/AuthContext';
+import toast from 'react-hot-toast';
 
 export default function TemplatesPage() {
   const [filter, setFilter] = useState<'all' | 'dark' | 'light'>('all');
   const [search, setSearch] = useState('');
+  const [applying, setApplying] = useState<string | null>(null);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const handleUseTemplate = async (key: string, t: typeof TEMPLATE_THEMES[string]) => {
+    if (!user) {
+      router.push('/register');
+      return;
+    }
+    setApplying(key);
+    try {
+      // Create a new portfolio with this template pre-applied
+      const res = await fetch('/api/portfolios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: 'My Portfolio',
+          themeSettings: {
+            primaryColor: t.primaryColor,
+            accentColor: t.accentColor,
+            backgroundColor: t.backgroundColor,
+            textColor: t.textColor,
+            fontFamily: t.fontFamily,
+            cardStyle: t.cardStyle,
+            buttonStyle: t.buttonStyle,
+            darkMode: t.darkMode,
+            template: t.template,
+          },
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.portfolio?._id) {
+        toast.success(`${t.name} template applied!`);
+        router.push(`/dashboard/builder/${data.portfolio._id}`);
+      } else {
+        toast.error('Failed to create portfolio');
+      }
+    } catch {
+      toast.error('Something went wrong');
+    } finally {
+      setApplying(null);
+    }
+  };
 
   const entries = Object.entries(TEMPLATE_THEMES).filter(([, t]) => {
     const matchesFilter = filter === 'all' || (filter === 'dark' && t.darkMode) || (filter === 'light' && !t.darkMode);
@@ -122,13 +168,13 @@ export default function TemplatesPage() {
                     ))}
                   </div>
 
-                  <Link href="/register" style={{ textDecoration: 'none', display: 'block' }}>
-                    <button style={{ width: '100%', padding: '0.65rem', borderRadius: '12px', background: `linear-gradient(135deg, ${t.primaryColor}, ${t.accentColor})`, border: 'none', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', transition: 'opacity 0.2s' }}
-                      onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-                      onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}>
-                      Use This Template <ArrowRight size={15} />
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() => handleUseTemplate(key, t)}
+                    disabled={applying === key}
+                    style={{ width: '100%', padding: '0.65rem', borderRadius: '12px', background: `linear-gradient(135deg, ${t.primaryColor}, ${t.accentColor})`, border: 'none', color: '#fff', fontWeight: 700, cursor: applying === key ? 'not-allowed' : 'pointer', fontSize: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', opacity: applying === key ? 0.8 : 1, transition: 'opacity 0.2s' }}
+                  >
+                    {applying === key ? <><Loader2 size={15} /> Applying...</> : <>{user ? 'Use This Template' : 'Get Started'} <ArrowRight size={15} /></>}
+                  </button>
                 </div>
               </motion.div>
             ))}

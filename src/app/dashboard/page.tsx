@@ -30,10 +30,27 @@ export default function DashboardPage() {
     }
   };
 
-  const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-    await deletePortfolio(id);
-    toast.success('Portfolio deleted');
+  const handleDelete = (id: string, title: string) => {
+    toast((t) => (
+      <div>
+        <p style={{ fontWeight: 600, marginBottom: '0.75rem' }}>Delete "{title}"? This cannot be undone.</p>
+        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+          <button onClick={() => toast.dismiss(t.id)} className="btn-ghost" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}>Cancel</button>
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              toast.loading('Deleting...', { id: 'delete' });
+              await deletePortfolio(id);
+              toast.success('Portfolio deleted', { id: 'delete' });
+            }}
+            className="btn-danger"
+            style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ), { duration: Infinity, style: { background: '#1e293b', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' } });
   };
 
   const copyLink = (url: string) => {
@@ -186,7 +203,7 @@ function PortfolioCard({ portfolio, onDelete, onCopyLink, router }: {
         <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.75rem', color: '#475569' }}>
           <span>{portfolio.projects?.length || 0} projects</span>
           <span>·</span>
-          <span>{portfolio.skills?.length || 0} skills</span>
+          <span>{portfolio.skillCategories?.length || 0} skill categories</span>
           {isPublished && <><span>·</span><span style={{ color: '#fbbf24' }}>{portfolio.viewCount || 0} views</span></>}
         </div>
 

@@ -46,7 +46,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     const portfolio = await Portfolio.findOneAndUpdate(
       { _id: id, userId: authUser.userId },
       { ...body, updatedAt: new Date() },
-      { new: true, runValidators: true }
+      { returnDocument: 'after' }
     );
 
     if (!portfolio) {

@@ -117,7 +117,7 @@ export interface IPortfolio extends Document {
 }
 
 const ProjectSchema = new Schema<IProject>({
-  title: { type: String, required: true },
+  title: { type: String, default: '' },
   description: { type: String, default: '' },
   image: { type: String, default: '' },
   techStack: [{ type: String }],
@@ -131,7 +131,7 @@ const ProjectSchema = new Schema<IProject>({
 });
 
 const EducationSchema = new Schema<IEducation>({
-  institution: { type: String, required: true },
+  institution: { type: String, default: '' },
   degree: { type: String, default: '' },
   field: { type: String, default: '' },
   startYear: { type: String, default: '' },
@@ -141,7 +141,7 @@ const EducationSchema = new Schema<IEducation>({
 });
 
 const AchievementSchema = new Schema<IAchievement>({
-  title: { type: String, required: true },
+  title: { type: String, default: '' },
   category: {
     type: String,
     enum: ['hackathon', 'certification', 'award', 'leadership', 'internship', 'other'],

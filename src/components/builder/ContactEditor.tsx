@@ -1,6 +1,6 @@
 'use client';
 
-import { Mail, Github, Linkedin, Twitter, Globe, Phone, Instagram } from 'lucide-react';
+import { Mail, GitBranch, Link, X, Globe, Phone, Camera } from 'lucide-react';
 import { IPortfolio, ISocialLinks } from '@/models/Portfolio';
 
 interface EditorProps {
@@ -11,10 +11,10 @@ interface EditorProps {
 
 const SOCIAL_FIELDS: { key: keyof ISocialLinks; label: string; icon: React.ElementType; placeholder: string }[] = [
   { key: 'email', label: 'Email', icon: Mail, placeholder: 'you@example.com' },
-  { key: 'github', label: 'GitHub', icon: Github, placeholder: 'https://github.com/yourusername' },
-  { key: 'linkedin', label: 'LinkedIn', icon: Linkedin, placeholder: 'https://linkedin.com/in/yourprofile' },
-  { key: 'twitter', label: 'Twitter / X', icon: Twitter, placeholder: 'https://twitter.com/yourhandle' },
-  { key: 'instagram', label: 'Instagram', icon: Instagram, placeholder: 'https://instagram.com/yourhandle' },
+  { key: 'github', label: 'GitHub', icon: GitBranch, placeholder: 'https://github.com/yourusername' },
+  { key: 'linkedin', label: 'LinkedIn', icon: Link, placeholder: 'https://linkedin.com/in/yourprofile' },
+  { key: 'twitter', label: 'Twitter / X', icon: X, placeholder: 'https://twitter.com/yourhandle' },
+  { key: 'instagram', label: 'Instagram', icon: Camera, placeholder: 'https://instagram.com/yourhandle' },
   { key: 'website', label: 'Personal Website', icon: Globe, placeholder: 'https://yourwebsite.com' },
   { key: 'phone', label: 'Phone (optional)', icon: Phone, placeholder: '+91 98765 43210' },
 ];

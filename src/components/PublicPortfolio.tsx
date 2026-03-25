@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { IPortfolio } from '@/models/Portfolio';
 import { getVideoEmbedUrl, getVideoThumbnail } from '@/lib/utils';
-import { Github, ExternalLink, Mail, Linkedin, Twitter, Instagram, Globe, X, Play, Download } from 'lucide-react';
+import { GitBranch, ExternalLink, Mail, Link2, X, Camera, Globe, Play, Download } from 'lucide-react';
 
 export default function PublicPortfolio({ portfolio }: { portfolio: IPortfolio }) {
   const [videoModal, setVideoModal] = useState<{ url: string; type: string; title: string } | null>(null);
@@ -180,7 +180,7 @@ export default function PublicPortfolio({ portfolio }: { portfolio: IPortfolio }
                           <Play size={14} /> Watch Demo
                         </button>
                       )}
-                      {proj.githubLink && <a href={proj.githubLink} target="_blank" rel="noopener" style={{ ...btnStyle(true), fontSize: '0.825rem', padding: '0.5rem 1rem' }}><Github size={14} /> GitHub</a>}
+                      {proj.githubLink && <a href={proj.githubLink} target="_blank" rel="noopener" style={{ ...btnStyle(true), fontSize: '0.825rem', padding: '0.5rem 1rem' }}><GitBranch size={14} /> GitHub</a>}
                       {proj.liveLink && <a href={proj.liveLink} target="_blank" rel="noopener" style={{ ...btnStyle(true), fontSize: '0.825rem', padding: '0.5rem 1rem' }}><ExternalLink size={14} /> Live</a>}
                     </div>
                   </div>
@@ -224,12 +224,12 @@ export default function PublicPortfolio({ portfolio }: { portfolio: IPortfolio }
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '2rem' }}>
               {portfolio.socialLinks?.email && <a href={`mailto:${portfolio.socialLinks.email}`} style={btnStyle()}><Mail size={18} /> Email Me</a>}
-              {portfolio.socialLinks?.linkedin && <a href={portfolio.socialLinks.linkedin} target="_blank" rel="noopener" style={btnStyle(true)}><Linkedin size={18} /> LinkedIn</a>}
-              {portfolio.socialLinks?.github && <a href={portfolio.socialLinks.github} target="_blank" rel="noopener" style={btnStyle(true)}><Github size={18} /> GitHub</a>}
+              {portfolio.socialLinks?.linkedin && <a href={portfolio.socialLinks.linkedin} target="_blank" rel="noopener" style={btnStyle(true)}><Link2 size={18} /> LinkedIn</a>}
+              {portfolio.socialLinks?.github && <a href={portfolio.socialLinks.github} target="_blank" rel="noopener" style={btnStyle(true)}><GitBranch size={18} /> GitHub</a>}
             </div>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              {portfolio.socialLinks?.twitter && <a href={portfolio.socialLinks.twitter} target="_blank" rel="noopener" className="social-link" style={{ color: muted }}><Twitter size={22} /></a>}
-              {portfolio.socialLinks?.instagram && <a href={portfolio.socialLinks.instagram} target="_blank" rel="noopener" className="social-link" style={{ color: muted }}><Instagram size={22} /></a>}
+              {portfolio.socialLinks?.twitter && <a href={portfolio.socialLinks.twitter} target="_blank" rel="noopener" className="social-link" style={{ color: muted }}><X size={22} /></a>}
+              {portfolio.socialLinks?.instagram && <a href={portfolio.socialLinks.instagram} target="_blank" rel="noopener" className="social-link" style={{ color: muted }}><Camera size={22} /></a>}
               {portfolio.socialLinks?.website && <a href={portfolio.socialLinks.website} target="_blank" rel="noopener" className="social-link" style={{ color: muted }}><Globe size={22} /></a>}
             </div>
           </div>

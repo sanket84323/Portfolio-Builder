@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/dashboard/portfolios', label: 'My Portfolios', icon: Folder },
+  { href: '/templates', label: 'Templates', icon: Palette },
   { href: '/dashboard/analytics', label: 'Analytics', icon: BarChart2 },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];

@@ -24,10 +24,27 @@ export default function PortfoliosPage() {
     else toast.error('Failed to create portfolio');
   };
 
-  const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Delete "${title}"?`)) return;
-    await deletePortfolio(id);
-    toast.success('Deleted');
+  const handleDelete = (id: string, title: string) => {
+    toast((t) => (
+      <div>
+        <p style={{ fontWeight: 600, marginBottom: '0.75rem' }}>Delete "{title}"? This cannot be undone.</p>
+        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+          <button onClick={() => toast.dismiss(t.id)} className="btn-ghost" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}>Cancel</button>
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              toast.loading('Deleting...', { id: 'delete' });
+              await deletePortfolio(id);
+              toast.success('Portfolio deleted', { id: 'delete' });
+            }}
+            className="btn-danger"
+            style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ), { duration: Infinity, style: { background: '#1e293b', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' } });
   };
 
   return (

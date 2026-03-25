@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Plus, Trash2, ChevronDown, ChevronUp, Video, Link2, Github, ExternalLink } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Plus, Trash2, ChevronDown, ChevronUp, Video, Link2, GitBranch, ExternalLink } from 'lucide-react';
 import { IPortfolio, IProject } from '@/models/Portfolio';
 
 interface EditorProps {
@@ -14,6 +14,48 @@ const blank: IProject = {
   title: '', description: '', image: '', techStack: [], githubLink: '', liveLink: '',
   videoUrl: '', videoThumbnail: '', videoDescription: '', videoType: 'youtube',
 };
+
+function ImageUploadBox({ value, onUploaded }: { value?: string; onUploaded: (url: string) => void }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (file: File) => {
+    setUploading(true);
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('type', 'image');
+    const res = await fetch('/api/upload', { method: 'POST', body: fd });
+    if (res.ok) { const d = await res.json(); onUploaded(d.url); }
+    setUploading(false);
+  };
+
+  return (
+    <div>
+      <div
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => { e.preventDefault(); const f = e.dataTransfer.files?.[0]; if (f) handleFile(f); }}
+        style={{ position: 'relative', width: '100%', height: '110px', borderRadius: '10px', border: '2px dashed rgba(99,102,241,0.25)', background: 'rgba(255,255,255,0.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', overflow: 'hidden' }}>
+        {value ? (
+          <>
+            <img src={value} alt="preview" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}>
+              <span style={{ fontSize: '1.2rem' }}>{uploading ? '⏳' : '📷'}</span>
+              <span style={{ color: '#fff', fontSize: '0.72rem', fontWeight: 600, marginTop: '0.2rem' }}>{uploading ? 'Uploading…' : 'Click to change'}</span>
+            </div>
+          </>
+        ) : (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '1.4rem' }}>{uploading ? '⏳' : '🖼️'}</div>
+            <div style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '0.2rem' }}>{uploading ? 'Uploading…' : 'Click or drag image to upload'}</div>
+          </div>
+        )}
+      </div>
+      <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
+      <input className="input-field" placeholder="Or paste image URL…" value={value || ''} onChange={(e) => onUploaded(e.target.value)} style={{ marginTop: '0.4rem', fontSize: '0.78rem' }} />
+    </div>
+  );
+}
 
 export default function ProjectsEditor({ portfolio, onUpdate }: EditorProps) {
   const projects = portfolio.projects || [];
@@ -88,26 +130,14 @@ export default function ProjectsEditor({ portfolio, onUpdate }: EditorProps) {
 
               {/* Project image */}
               <div>
-                <label className="label-field">Project Image / Screenshot URL</label>
-                <input className="input-field" placeholder="https://..." value={proj.image || ''}
-                  onChange={(e) => patch(idx, 'image', e.target.value)} />
-                <input type="file" accept="image/*" style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '0.4rem' }}
-                  onChange={async (e) => {
-                    const file = e.target.files?.[0];
-                    if (!file) return;
-                    const fd = new FormData();
-                    fd.append('file', file);
-                    fd.append('type', 'image');
-                    const res = await fetch('/api/upload', { method: 'POST', body: fd });
-                    if (res.ok) { const d = await res.json(); patch(idx, 'image', d.url); }
-                  }}
-                />
+                <label className="label-field">Project Screenshot / Image</label>
+                <ImageUploadBox value={proj.image || ''} onUploaded={(url) => patch(idx, 'image', url)} />
               </div>
 
               {/* Links */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <div>
-                  <label className="label-field"><Github size={12} style={{ display: 'inline', marginRight: '0.3rem' }} />GitHub Link</label>
+                  <label className="label-field"><GitBranch size={12} style={{ display: 'inline', marginRight: '0.3rem' }} />GitHub Link</label>
                   <input className="input-field" placeholder="https://github.com/..." value={proj.githubLink || ''}
                     onChange={(e) => patch(idx, 'githubLink', e.target.value)} />
                 </div>
