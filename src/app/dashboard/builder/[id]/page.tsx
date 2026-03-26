@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, use } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Save, Eye, Globe, Monitor, Smartphone, FileText, ChevronDown, ChevronUp, Loader2, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
+import { Save, Eye, Globe, Monitor, Smartphone, ChevronDown, ChevronUp, Loader2, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react';
 import { usePortfolio } from '@/hooks/usePortfolio';
 import { IPortfolio } from '@/models/Portfolio';
 import toast from 'react-hot-toast';
